@@ -31,7 +31,7 @@ const Create = React.createClass({
                             <option value="" disabled selected>User</option>
                             {this.state.data.map(function(val) {
                                 return (
-                                    <option key={val.id} value={val.id}>{val.name}</option>
+                                    <option key={val.id} value={val.id}>{val.fname} {val.lname}</option>
                                 )
                             })
                             }

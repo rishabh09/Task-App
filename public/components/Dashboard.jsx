@@ -16,6 +16,7 @@ const Dashboard = React.createClass({
 
   render: function(){
     var that = this
+    console.log(this.state)
     if (!this.state) {
         return (    <div className="row">
               <br/>
@@ -49,12 +50,11 @@ const Dashboard = React.createClass({
     <tbody>
 
         {  this.state.taskto.map(function(val) {
-            val = JSON.parse(val)
             return(
-            <tr>
+            <tr key = {val.id}>
               <td width="150">{val.title}</td>
-              <td width="250">{val.task_details}</td>
-              <td width="150">{that.state.userlist[val.taskby_id]}</td>
+              <td width="250">{val.details}</td>
+              <td width="150">{that.state.userlist[val.taskby]}</td>
               <td width="150">{val.date}</td>
               <td width="150">{val.duedate}</td>
               <td width="150">{val.status}</td>
@@ -82,16 +82,15 @@ const Dashboard = React.createClass({
   <tbody>
 
     {  this.state.taskby.map(function(val) {
-        let valx = JSON.parse(val)
         return(
-        <tr>
-          <td width="150">{valx.title}</td>
-          <td width="250">{valx.task_details}</td>
-          <td width="150">{that.state.userlist[valx.taskto_id]}</td>
-          <td width="150">{valx.date}</td>
-          <td width="150">{valx.duedate}</td>
-          <td width="150">{valx.status}</td>
-          <td width="100">Delete</td>
+        <tr key={val.id}>
+          <td width="150">{val.title}</td>
+          <td width="250">{val.details}</td>
+          <td width="150">{that.state.userlist[val.taskto]}</td>
+          <td width="150">{val.date}</td>
+          <td width="150">{val.duedate}</td>
+          <td width="150">{val.status}</td>
+          <td width="100"><a href={"/delete/"+val.id+"/"+val.taskby}>Delete</a></td>
           </tr>
         )
     })
