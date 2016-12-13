@@ -3,6 +3,7 @@ html
   head
     meta(charset="utf-8")
     title Task App
+    script(src = "main.js")
     script(src="https://sdk.accountkit.com/en_US/sdk.js")
     link(href="css/style1.css" rel="stylesheet" type="text/css")
   body
@@ -16,4 +17,3 @@ html
       input#mobile(type="hidden" name="mobile")
       input#csrf_nonce(type="hidden" name="csrf_nonce" value=data)
       input#code(type="hidden" name="code")
-    script(src = "main.js")

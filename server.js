@@ -8,6 +8,9 @@ const pug = require('pug')
 const Request = require('request')
 const Querystring = require('querystring')
 const mysql = require('mysql');
+const serveStatic = require('serve-static')
+const path = require('path')
+const compression = require('compression')
 
 const app = express()
 
@@ -35,8 +38,11 @@ connection.connect(function(err) {
     }
 })
 
+app.use(compression())
+app.use(serveStatic(path.join(__dirname, 'public'), {
+  maxAge: 60*60
+}))
 
-app.use(express.static('public'))
 app.use(bodyParser.json()) // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
     extended: true
@@ -205,6 +211,6 @@ app.get('/logout', (req, res) => {
     });
 });
 
-app.listen(80, function() {
+app.listen(3000, function() {
     console.log('server running on 3000')
 })
