@@ -1,5 +1,5 @@
 import React from 'react'
-import IO from 'io-square-browser'
+import {getJSON} from 'io-square-browser'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import 'style!css!react-datepicker/dist/react-datepicker.css';
@@ -12,21 +12,21 @@ const Create = React.createClass({
         this.setState({dueDate: date});
     },
     componentWillMount: function() {
-        IO.getJSON('/getuserdata').then((reply) => {
+        getJSON('/getuserdata').then((reply) => {
             this.setState({data: reply, startDate: moment(), dueDate: moment()})
         })
     },
     render: function() {
         if (!this.state) {
-            return <div>
+            return <div class="row">
                 <h1>Patience You Must Have My Young Padawan</h1>
             </div>
         }
         return (
-            <div>
+            <div className="row">
                 <form name="taskform" method="post" action="/formsubmit">
-                    <div className="row">
-                      Assigned To
+                    <div className="taskform">
+                        <label>Assigned To</label>
                         <select required name="taskto_id">
                             <option value="" disabled selected>User</option>
                             {this.state.data.map(function(val) {
@@ -37,16 +37,16 @@ const Create = React.createClass({
                             }
                         </select>
                         <br/>
-                        Task Name
+                        <label>Task Name</label>
                         <input type="text" name="task_name" className="small-6 columns" required/>
                         <br/>
-                        Task Details
+                        <label>Task Details</label>
                         <input type="text" name="task_details" className="small-6 columns" required/>
                         <br/>
-                        Task Date
+                        <label>Task Date</label>
                         <DatePicker name="date" className="small-6 columns" selected={this.state.startDate} dateFormat="DD/MM/YYYY" onChange={this.handleChange.bind(this)} required/>
                         <br/>
-                        Due Date
+                        <label>Due Date</label>
                         <DatePicker name="duedate" className="small-6 columns" selected={this.state.dueDate} dateFormat="DD/MM/YYYY" onChange={this.dateChange.bind(this)} required/>
                         <br/>
                         <button type="submit" className="success button">Submit</button>

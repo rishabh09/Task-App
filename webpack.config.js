@@ -1,18 +1,9 @@
 const webpack = require('webpack')
 module.exports = {
     entry: [
-      'script!jquery/dist/jquery.min.js',
-      'script!foundation-sites/dist/js/foundation.min.js',
       './public/app.jsx'
     ],
-    externals:{
-      jquery:'jQuery'
-    },
     plugins:[
-      new webpack.ProvidePlugin({
-        '$' : 'jquery',
-        'jQuery' : 'jquery'
-      }),
       new webpack.DefinePlugin({
    'process.env': {
      'NODE_ENV': JSON.stringify('production')
@@ -32,7 +23,9 @@ module.exports = {
          Update: 'public/components/Update.jsx',
          Create: 'public/components/Create.jsx',
          Select: 'public/components/Select.jsx',
-         AppCss: 'public/css/style.css'
+         Tasks: 'public/components/Tasks.jsx',
+         AppCss: 'public/css/style.css',
+         Socket: 'public/socket.io.js'
         },
         extensions: ['', '.js', '.jsx']
     },

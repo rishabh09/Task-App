@@ -14,6 +14,9 @@ const compression = require('compression')
 
 const app = express()
 
+var server = app.listen(3000)
+const io = require('socket.io').listen(server);
+
 require('dotenv').config()
 
 var csrf_guid = uuid.v4()
@@ -185,12 +188,9 @@ app.get('/getdashboard', (req, res) => {
                taskto: data1,
                userlist: userlist
              })
-
           })
-
         })
     })
-
 })
 
 app.get('/delete/:id/:userid', (req, res) => {
@@ -211,6 +211,13 @@ app.get('/logout', (req, res) => {
     });
 });
 
-app.listen(3000, function() {
-    console.log('server running on 3000')
-})
+io.on('connection', function (socket) {
+  console.log('a user connected');
+  socket.on('chat message', function(msg){
+    console.log('message: ' + msg);
+  });
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+  
+});
