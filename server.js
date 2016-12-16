@@ -212,6 +212,20 @@ app.get('/delete/:id/:userid', (req, res) => {
         res.redirect('/')
     }
 })
+
+app.get('/updatetask/:id/:userid/:status', (req, res) => {
+  console.log(req.session.user_id,req.params.userid)
+  let x = "Not Completed"
+  if (req.session.user_id === req.params.userid) {
+    if(req.params.status === "Not Completed") x = "Completed"
+    connection.query('UPDATE tasks SET status = ? WHERE id = ? and taskto = ?',[x, req.params.id,req.params.userid],(err, reply)=>{
+      console.log(req.params.id,req.params.status)
+  })
+    res.redirect('/')
+}
+
+})
+
 app.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) console.log(err)

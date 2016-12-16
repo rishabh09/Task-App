@@ -60,7 +60,7 @@ sendMessage:function(){
       <tr>
         <th width="150">Task Name</th>
         <th width="250">Task Details</th>
-        <th width="150">Assigned By</th>
+        <th width="200">Assigned By</th>
         <th width="150">Assigned On</th>
         <th width="150">Due Date</th>
         <th width="150">Status</th>
@@ -75,12 +75,12 @@ sendMessage:function(){
             <tr key = {val.id}>
               <td width="150">{val.title}</td>
               <td width="250">{val.details}</td>
-              <td width="150">{that.state.userlist[val.taskby]}</td>
+              <td width="200">{that.state.userlist[val.taskby]}</td>
               <td width="150">{val.date}</td>
               <td width="150">{val.duedate}</td>
-              <td width="150">{val.status}</td>
-              <td width="150"><a href="#" onClick={that.openModal.bind(this,val)}>Comments</a></td>
-              <td width="100">EDIT</td>
+              <td width="150" className={val.status}>{val.status}</td>
+              <td width="150"><button className="CommentBtn" onClick={that.openModal.bind(this,val)}>Comments</button></td>
+              <td width="100"><a href={"/updatetask/"+val.id+"/"+val.taskto+"/"+val.status}>EDIT</a></td>
               </tr>
             )
         })

@@ -1,6 +1,8 @@
 import React from 'react'
 import {getJSON} from 'io-square-browser'
-import Modal1 from 'react-modal'
+import Modal from 'react-modal'
+import io from 'Socket'
+const socket = io();
 import Chat from 'Chat'
 
 const Tasks = React.createClass({
@@ -10,29 +12,30 @@ const Tasks = React.createClass({
         this.setState({
           taskby:reply.taskby,
           userlist:reply.userlist,
-          chats1:[]
-                })
+          chats:[],
+        })
       })
-      this.openModal1 = this.openModal1.bind(this);
-      this.closeModal1 = this.closeModal1.bind(this);
+      this.openModal = this.openModal.bind(this);
+      this.closeModal = this.closeModal.bind(this);
 
   },
-   openModal1:function(e) {
-     console.log(this)
-  console.log('open')
+   openModal:function(e) {
+   this.setState({
+     chattitle:e.title,
+     open: true});
 }
 ,
-sendMessage1:function(){
-  let chats1 = this.state.chats1
-  chats1.push(this.refs.chatmessage.value)
+sendMessage:function(){
+  let chats = this.state.chats
+  socket.emit('chat message', this.refs.chatmessage.value);
+  chats.push(this.refs.chatmessage.value)
   this.refs.chatmessage.value = "";
   this.setState({
-    chats1:chats1
+    chats:chats
   })
 }
 ,
- closeModal1:function() { this.setState({open1: false});
-console.log('close')}
+ closeModal:function() { this.setState({open: false}); }
  ,
   render: function(){
     var that = this
@@ -77,7 +80,7 @@ console.log('close')}
               <td width="150">{val.date}</td>
               <td width="150">{val.duedate}</td>
               <td width="150">{val.status}</td>
-              <td width="150"><a href="#" onClick={that.openModal1.bind(this,val)}>Comments</a></td>
+              <td width="150"><button className="CommentBtn" onClick={that.openModal.bind(this,val)}>Comments</button></td>
               <td width="100">EDIT</td>
               </tr>
             )
@@ -85,20 +88,20 @@ console.log('close')}
         }
     </tbody>
   </table>
-      <Modal1 className="ModalClass" shouldCloseOnOverlayClick="true"
-            overlayClassName="OverlayClass" onRequestClose={this.closeModal1} isOpen={this.state.open1}>
+      <Modal className="ModalClass" shouldCloseOnOverlayClick="true"
+            overlayClassName="OverlayClass" onRequestClose={this.closeModal} isOpen={this.state.open}>
             <div id="chatheader">
-              {this.state.chattitle1}
-              <button id="closebtn" onClick={this.closeModal1}>X</button>
+              {this.state.chattitle}
+              <button id="closebtn" onClick={this.closeModal}>X</button>
             </div>
             <div ref="messages" id="messages">
-              <Chat chats={this.state.chats1}/>
+              <Chat chats={this.state.chats}/>
             </div>
-            <form id="chatform" action="" onSubmit={this.sendMessage1}>
+            <form id="chatform" action="" onSubmit={this.sendMessage}>
               <input type="text" ref="chatmessage" id="m" autocomplete="off" required/>
               <input type="submit" value="submit" />
             </form>
-        </Modal1>
+  </Modal>
       </div>
     )
   }

@@ -205,3 +205,16 @@ margin: 80px;
 height: 70%;
 overflow: auto;
 }
+.Completed{
+  color: green;
+}
+.Not{
+  color: red;
+}
+.CommentBtn{
+  padding: 7px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  border: 0px;
+}
