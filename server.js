@@ -110,10 +110,9 @@ app.post('/home', function(request, response) {
                 json: true
             }, function(err, resp, respBody) {
                 view.phone_num = request.body.mobile
-
                 connection.query('SELECT * from userinfo WHERE id = ?', view.user_id, (err, data) => {
                     if (err) throw err
-                    if (data === []) response.render('home', view)
+                    if (data.length < 1) response.render('home', view)
                     else {
                         request.session.user_id = view.user_id
                         response.redirect('/')
@@ -173,26 +172,35 @@ app.post('/formsubmit', (req, res) => {
     })
 })
 app.get('/getdashboard', (req, res) => {
-    connection.query('SELECT * FROM tasks WHERE taskby = ?', req.session.user_id, (err, data) => {
-        if (err) throw err
         connection.query('SELECT * FROM tasks WHERE taskto = ?', req.session.user_id, (err1, data1) => {
-          if (err1) throw err1
           connection.query('SELECT * FROM userinfo',(err2, data2) => {
-            if (err1) throw err1
             let userlist = {}
             data2.map(function(x){
               userlist[x.id] = x.fname +" "+ x.lname
             })
              res.send({
-               taskby: data,
                taskto: data1,
                userlist: userlist
              })
           })
         })
-    })
 })
 
+app.get('/usertasks',(req, res)=>{
+  console.log('user Requested')
+  connection.query('SELECT * FROM tasks WHERE taskby = ?', req.session.user_id, (err, data) => {
+      connection.query('SELECT * FROM userinfo',(err2, data2) => {
+        let userlist = {}
+        data2.map(function(x){
+          userlist[x.id] = x.fname +" "+ x.lname
+        })
+         res.send({
+           taskby: data,
+           userlist: userlist
+         })
+      })
+    })
+})
 app.get('/delete/:id/:userid', (req, res) => {
     console.log(req.session.user_id,req.params.userid)
     if (req.session.user_id === req.params.userid) {
@@ -212,12 +220,14 @@ app.get('/logout', (req, res) => {
 });
 
 io.on('connection', function (socket) {
-  console.log('a user connected');
+  socket.on('join',function(name){
+    console.log(name + 'Connected')
+  })
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
-  
+
 });

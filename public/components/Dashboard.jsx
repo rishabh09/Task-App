@@ -3,23 +3,8 @@ import {getJSON} from 'io-square-browser'
 import Modal from 'react-modal'
 import io from 'Socket'
 const socket = io();
+import Chat from 'Chat'
 
-const Chat=React.createClass ({
-  getInitialState:function(){
-    return {
-      chats:this.props.chats
-    }
-  },
-  render:function(){
-    return(<div>
-      {
-        this.state.chats.map(function(chat){
-          return <h2>{chat}</h2>
-        })
-      }
-</div>)
-  }
-})
 const Dashboard = React.createClass({
   componentWillMount:function(){
     getJSON('/getdashboard')
@@ -54,8 +39,6 @@ sendMessage:function(){
  ,
   render: function(){
     var that = this
-
-    console.log(this.state)
     if (!this.state) {
         return (    <div className="row">
               <br/>

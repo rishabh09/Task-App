@@ -25,7 +25,8 @@ module.exports = {
          Select: 'public/components/Select.jsx',
          Tasks: 'public/components/Tasks.jsx',
          AppCss: 'public/css/style.css',
-         Socket: 'public/socket.io.js'
+         Socket: 'public/socket.io.js',
+         Chat: 'public/components/Chat.jsx'
         },
         extensions: ['', '.js', '.jsx']
     },
