@@ -156,7 +156,7 @@ app.get('/userdata', (req, res) => {
 })
 app.post('/formsubmit', (req, res) => {
     const taskObject = {
-        id: uuid.v4(),
+        id: uuid.v1(),
         title: req.body.task_name,
         details: req.body.task_details,
         date: req.body.date,
@@ -186,8 +186,7 @@ app.get('/getdashboard', (req, res) => {
         })
 })
 
-app.get('/usertasks',(req, res)=>{
-  console.log('user Requested')
+app.get('/usertasks',(req, res)=> {
   connection.query('SELECT * FROM tasks WHERE taskby = ?', req.session.user_id, (err, data) => {
       connection.query('SELECT * FROM userinfo',(err2, data2) => {
         let userlist = {}
@@ -234,12 +233,20 @@ app.get('/logout', (req, res) => {
 });
 
 io.on('connection', function (socket) {
-  socket.on('join',function(name){
-    console.log(name + 'Connected')
+  socket.on('join',function(data){
+    socket.join(data.chatroom)
+    console.log(data.user + ' Joined ' + data.chatroom)
   })
-  socket.on('chat message', function(msg){
-    console.log('message: ' + msg);
+  socket.on('chat message', function(data){
+    console.log(data.username+' : ' + data.message+" "+data.time);
+    io.to(data.chatroom).emit('recieved-chats',data)
   });
+  
+  socket.on('leave',(data)=>{
+      socket.leave(data.chatroom)
+      console.log(data.user + ' leaved ' + data.chatroom)
+  })
+
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });

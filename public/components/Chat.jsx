@@ -6,11 +6,17 @@ const Chat=React.createClass ({
       chats:this.props.chats
     }
   },
+  componentDidUpdate:function(){
+    console.log(this.refs)
+  this.refs.elem.scrollTo(0);
+  },
+
   render:function(){
-    return(<div>
+    let chats = [...new Set(this.state.chats)];
+    return(<div refs="elem">
       {
-        this.state.chats.map(function(chat){
-          return <h2>{chat}</h2>
+        chats.map(function(chat){
+          return <div>{chat.username+" : "+chat.message+"  "+chat.time}</div>
         })
       }
 </div>)

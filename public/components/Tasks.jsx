@@ -4,6 +4,7 @@ import Modal from 'react-modal'
 import io from 'Socket'
 const socket = io();
 import Chat from 'Chat'
+import moment from 'moment'
 
 const Tasks = React.createClass({
   componentWillMount:function(){
@@ -12,7 +13,7 @@ const Tasks = React.createClass({
         this.setState({
           taskby:reply.taskby,
           userlist:reply.userlist,
-          chats:[],
+          chats:[]
         })
       })
       this.openModal = this.openModal.bind(this);
@@ -20,22 +21,34 @@ const Tasks = React.createClass({
 
   },
    openModal:function(e) {
+      let that = this
    this.setState({
      chattitle:e.title,
-     open: true});
+     open: true,
+     userid:this.state.userlist[e.taskby],
+     chatid:e.id
+ });
+     socket.emit('join', {chatroom:e.id,user:this.state.userlist[e.taskby]})
+      socket.on('recieved-chats',function(data){
+        let chats = that.state.chats
+        chats.push(data)
+        console.log(data)
+        that.setState({
+          chats:chats
+      })
+    })
 }
 ,
 sendMessage:function(){
-  let chats = this.state.chats
-  socket.emit('chat message', this.refs.chatmessage.value);
-  chats.push(this.refs.chatmessage.value)
+    let time = moment().format("HH:mm:ss DD-MM-YY")
+  socket.emit('chat message', {chatroom:this.state.chatid,username:this.state.userid,message:this.refs.chatmessage.value,time:time});
   this.refs.chatmessage.value = "";
-  this.setState({
-    chats:chats
-  })
 }
 ,
- closeModal:function() { this.setState({open: false}); }
+ closeModal:function() { 
+      socket.emait('leave',{chatroom:this.state.chatid,username:this.state.userid})
+   this.setState({open: false,
+     chats:[]}); }
  ,
   render: function(){
     var that = this
