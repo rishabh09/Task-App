@@ -1,3 +1,21 @@
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px)   {
+
+.top-bar{
+display: none;
+}
+.top-bar-right{
+display: none;
+}
+.left-bar{
+  position: fixed !important;
+  top: 0px !important;
+  left: 0px !important;
+  width:100% !important;
+  height: 10% !important;
+}
+
+}
+
 .top-bar{
   position: fixed;
   top: 0px;
