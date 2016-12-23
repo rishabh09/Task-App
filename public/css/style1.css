@@ -47,6 +47,7 @@ table {
     border-spacing: 0;
 }
 /*Custom style*/
+@media screen and (min-device-width: 768px){
 body{
   height: 100%;
   background-image: url('/images/home.jpg');
@@ -89,4 +90,63 @@ border: solid 2px #3478e5;
   width: 276px;
   height: 50px;
   border: solid 2px #3478e5;
+}
+
+
+
+
+}
+
+@media screen and (min-device-width: 300px) and (max-device-width:767px){
+  html{
+    height: 100%;
+    width: 100%;
+  }
+  body{
+    position: absolute;
+    top:0px;
+    left: 0px;
+    height: 100% !important;
+    width: 100%;
+    background:linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+	  height: 100%;
+    }
+  #loginform{
+    position: absolute;
+    top:30%;
+    width: 100%;
+    background-color: rgba(67, 73, 81, 0.5);
+
+  }
+  #loginform h4{
+  text-align: center;
+    color: white;
+    margin: 1px;
+  margin-top: 5%;
+      font-weight: bolder;
+        font-size: 5em;
+  }
+  #phone_num{
+    font-family:  'Arial', 'Liberation Sans', 'Helvetica Neue', sans-serif;
+font-size: 5em;
+margin: 5%;
+margin-left: 7%;
+padding: 30px;
+padding-left: 3%;
+padding-right: 3%;
+width: 80%;
+height: 50px;;
+  }
+
+#login_button{
+  background-color: #6095ea;
+  color: white;
+  font-weight: bold;
+  font-size: 3em;
+  margin-left:7%;
+  margin-bottom: 10%;
+  width: 86%;
+  height: 100px;
+  border: solid 2px #3478e5;
+}
 }

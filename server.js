@@ -234,11 +234,11 @@ app.get('/logout', (req, res) => {
   })
 })
 
-app.get('/oldchats/:chatid',(req,res)=>{
-  db.redis.lrange(req.params.chatid,0,-1).then((reply)=>{
-      console.log(reply)
-      res.send(reply)
-    })
+app.get('/oldchats/:chatid', (req, res) => {
+  db.redis.lrange(req.params.chatid, 0, -1).then((reply) => {
+    console.log(reply)
+    res.send(reply)
+  })
 })
 
 io.on('connection', function (socket) {
@@ -248,8 +248,8 @@ io.on('connection', function (socket) {
   })
   socket.on('chat message', function (data) {
     console.log(data.username + ' : ' + data.message + ' ' + data.time)
-    db.redis.rpush(data.chatroom, JSON.stringify(data)).then((reply)=>{
-      console.log('db',reply)
+    db.redis.rpush(data.chatroom, JSON.stringify(data)).then((reply) => {
+      console.log('db', reply)
     })
     io.to(data.chatroom).emit('recieved-chats', data)
   })

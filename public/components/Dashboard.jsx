@@ -5,6 +5,19 @@ import io from 'Socket'
 const socket = io()
 import Chat from 'Chat'
 import moment from 'moment'
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
+import Comment from 'material-ui/svg-icons/action/question-answer'
+import FlatButton from 'material-ui/FlatButton'
+import Dialog from 'material-ui/Dialog'
+import TextField from 'material-ui/TextField';
+
+const customContentStyle = {
+  position:"fixed",
+  top:"30px",
+  left:"20%",
+  width: '60%',
+  maxWidth: 'none'
+}
 
 const Dashboard = React.createClass({
   componentWillMount: function () {
@@ -13,19 +26,19 @@ const Dashboard = React.createClass({
         this.setState({
           taskto: reply.taskto,
           userlist: reply.userlist,
-          chats: []
+          chats: [],
+          selectable: false
         })
       })
-    this.openModal = this.openModal.bind(this)
-    this.closeModal = this.closeModal.bind(this)
   },
-  openModal: function (e) {
+  handleOpen: function (e) {
     let that = this
     this.setState({
       chattitle: e.title,
       open: true,
       userid: this.state.userlist[e.taskto],
-      chatid: e.id
+      chatid: e.id,
+      uid: e.taskto
     })
     socket.emit('join', {chatroom: e.id,user: this.state.userlist[e.taskto]})
     socket.on('recieved-chats', function (data) {
@@ -37,19 +50,41 @@ const Dashboard = React.createClass({
       })
     })
   },
-  sendMessage: function () {
-    let time = moment().format('HH:mm:ss DD-MM-YY')
-    socket.emit('chat message', {chatroom: this.state.chatid,username: this.state.userid,message: this.refs.chatmessage.value,time: time})
-    this.refs.chatmessage.value = ''
-  },
-  closeModal: function () {
-    socket.emit('leave', {chatroom: this.state.chatid,username: this.state.userid})
+  handleClose: function(){        socket.emit('leave', {chatroom: this.state.chatid,username: this.state.userid})
     this.setState({open: false,
       chats: []
     }
     )
   },
+  sendMessage: function () {
+    let time = moment().format('HH:mm:ss DD-MM-YY')
+    socket.emit('chat message', {chatroom: this.state.chatid,username: this.state.userid,uid: this.state.uid,message: this.refs.chatmessage.value,time: time})
+    this.refs.chatmessage.value = ''
+  },
+
   render: function () {
+    const actions = [
+         <form id="chatform" action='' onSubmit={this.sendMessage}>
+          <input
+          style={{ border: '0',
+    padding: '2px',
+    width: '86%',
+    height:'30px',
+    fontSize: '20px'}}
+              type='text'
+              ref='chatmessage'
+              autocomplete='off'
+              required/>
+        <FlatButton
+        label="Submit"
+        primary={true}
+        onTouchTap={this.sendMessage}
+        style={{width:'10%'}}
+        />
+          </form>
+     
+    ];
+
     var that = this
     if (!this.state) {
       return (    <div className='row'>
@@ -65,97 +100,80 @@ const Dashboard = React.createClass({
 
     return (
       <div className='row'>
-        <h4>Task Assigned to You</h4>
-        <table className='data-tables'>
-          <thead>
-            <tr>
-              <th width='150'>
+        <Table selectable={false}>
+          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+            <TableRow>
+              <TableHeaderColumn style={{textAlign: 'center',fontSize:"20px",fontWeight:'bold'}}>
                 Task Name
-              </th>
-              <th width='250'>
+              </TableHeaderColumn>
+              <TableHeaderColumn style={{textAlign: 'center' ,fontSize:"20px",fontWeight:'bold'}}>
                 Task Details
-              </th>
-              <th width='200'>
+              </TableHeaderColumn>
+              <TableHeaderColumn style={{textAlign: 'center',fontSize:"20px",fontWeight:'bold'}}>
                 Assigned By
-              </th>
-              <th width='150'>
+              </TableHeaderColumn>
+              <TableHeaderColumn style={{textAlign: 'center' ,fontSize:"20px",fontWeight:'bold'}}>
                 Assigned On
-              </th>
-              <th width='150'>
+              </TableHeaderColumn>
+              <TableHeaderColumn style={{textAlign: 'center' ,fontSize:"20px",fontWeight:'bold'}}>
                 Due Date
-              </th>
-              <th width='150'>
+              </TableHeaderColumn>
+              <TableHeaderColumn style={{textAlign: 'center' ,fontSize:"20px",fontWeight:'bold'}}>
                 Status
-              </th>
-              <th width='150'>
+              </TableHeaderColumn>
+              <TableHeaderColumn style={{textAlign: 'center',fontSize:"20px",fontWeight:'bold'}}>
                 Comments
-              </th>
-              <th width='100'>
+              </TableHeaderColumn>
+              <TableHeaderColumn style={{textAlign: 'center',fontSize:"20px",fontWeight:'bold'}}>
                 Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+              </TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
             {this.state.taskto.map(function (val) {
                return (
-                 <tr key={val.id}>
-                   <td width='150'>
+                 <TableRow key={val.id}>
+                   <TableRowColumn style={{textAlign: 'center',fontSize:"15px"}}>
                      {val.title}
-                   </td>
-                   <td width='250'>
+                   </TableRowColumn>
+                   <TableRowColumn style={{textAlign: 'center',fontSize:"15px"}}>
                      {val.details}
-                   </td>
-                   <td width='200'>
+                   </TableRowColumn>
+                   <TableRowColumn style={{textAlign: 'center',fontSize:"15px"}}>
                      {that.state.userlist[val.taskby]}
-                   </td>
-                   <td width='150'>
+                   </TableRowColumn>
+                   <TableRowColumn style={{textAlign: 'center',fontSize:"15px"}}>
                      {val.date}
-                   </td>
-                   <td width='150'>
+                   </TableRowColumn>
+                   <TableRowColumn style={{textAlign: 'center',fontSize:"15px"}}>
                      {val.duedate}
-                   </td>
-                   <td width='150' className={val.status}>
+                   </TableRowColumn>
+                   <TableRowColumn className={val.status} style={{textAlign: 'center' ,fontSize:"15px"}}>
                      {val.status}
-                   </td>
-                   <td width='150'>
-                     <button className='CommentBtn' onClick={that.openModal.bind(this, val)}>
-                       Comments
-                     </button>
-                   </td>
-                   <td width='100'>
-                     <a href={'/updatetask/' + val.id + '/' + val.taskto + '/' + val.status}>EDIT</a>
-                   </td>
-                 </tr>
+                   </TableRowColumn>
+                   <TableRowColumn style={{textAlign: 'center'}}>
+                     <FlatButton icon={<Comment/>} onClick={that.handleOpen.bind(this, val)} />
+                   </TableRowColumn>
+                   <TableRowColumn style={{textAlign: 'center'}}>
+                      <FlatButton primary={true} label="Change Status" href={'/updatetask/' + val.id + '/' + val.taskto + '/' + val.status}/>
+                   </TableRowColumn>
+                 </TableRow>
                )
              })}
-          </tbody>
-        </table>
-        <Modal
-          className='ModalClass'
-          shouldCloseOnOverlayClick='true'
-          overlayClassName='OverlayClass'
-          onRequestClose={this.closeModal}
-          isOpen={this.state.open}>
-          <div id='chatheader'>
-            {this.state.chattitle}
-            <button id='closebtn' onClick={this.closeModal}>
-              X
-            </button>
-          </div>
-          <div ref='messages' id='messages'>
-            <Chat chats={this.state.chats} chatid={this.state.chatid}/>
-          </div>
-          <form id='chatform' action='' onSubmit={this.sendMessage}>
-            <input
-              type='text'
-              ref='chatmessage'
-              id='m'
-              autocomplete='off'
-              required/>
-            <input type='submit' value='submit' />
-          </form>
-        </Modal>
-      </div>
+          </TableBody>
+        </Table>
+          <Dialog
+          title={this.state.chattitle}
+          modal={false}
+          actions={actions}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+          autoScrollBodyContent={true}
+          contentStyle={customContentStyle}
+        >
+        <Chat chats={this.state.chats} chatid={this.state.chatid} uid={this.state.uid} />
+        </Dialog>
+        </div>
     )
   }
 })
