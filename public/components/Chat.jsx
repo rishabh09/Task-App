@@ -1,5 +1,6 @@
 import React from 'react'
 import { getJSON } from 'io-square-browser'
+import ReactDom from 'react-dom'
 
 const Chat = React.createClass({
   getInitialState: function () {
@@ -15,16 +16,22 @@ const Chat = React.createClass({
       })
     })
   },
+  componentWillUpdate:function(){
+      console.log(this.refs.chatlist.scrollTop,this.refs.chatlist.scrollHeight)
+      this.refs.chatlist.scrollTop = this.refs.chatlist.scrollHeight
+      console.log(this.refs.chatlist.scrollTop,this.refs.chatlist.scrollHeight)
+
+  },
 
   render: function () {
     let that = this
     let chats = [...new Set(this.state.chats)]
       if (!this.state.oldchats) {
-        return (<div>
+        return (<div ref="chatlist">
                 ....Please Wait....
               </div>)
        }
-    return (<div id="chatlist">
+    return (<div id="chatlist" ref="chatlist">
               {this.state.oldchats.map(function (chat) {
                  let chatx = JSON.parse(chat)
                  if(that.state.uid === chatx.uid){

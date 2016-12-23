@@ -153,7 +153,7 @@ const Tasks = React.createClass({
                      <FlatButton icon={<Comment/>} onClick={that.handleOpen.bind(this, val)} />
                    </TableRowColumn>
                    <TableRowColumn style={{textAlign: 'center'}}>
-                     <FlatButton primary={true} label='Change Status' href={'/updatetask/' + val.id + '/' + val.taskto + '/' + val.status} />
+                     <FlatButton secondary={true} label='Delete' href={"/delete/"+val.id+"/"+val.taskby} />
                    </TableRowColumn>
                  </TableRow>
                )

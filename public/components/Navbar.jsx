@@ -35,7 +35,7 @@ const NavBar = React.createClass({
           docked={false}
           width={200}
           open={this.state.open}
-          onRequestChange={;(open) => this.setState({open})}>
+          onRequestChange={(open) => this.setState({open})}>
           <IndexLink to='/' activeClassName='active' activeStyle={{fontWeight: 'bold'}}>
             <MenuItem onTouchTap={this.handleClose} rightIcon={<Home />}> Home
             </MenuItem>

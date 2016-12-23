@@ -110,17 +110,11 @@ table {
 .Not{
   color: red;
 }
-.CommentBtn{
-  padding: 7px;
-  background-color: #4CAF50;
-  color: white;
-  border-radius: 5px;
-  border: 0px;
-}
+
 
 .chats{
-  background-color:#f46969;
-  width:550px;
+  background-color:#00ACC1;
+  width:75%;
   padding:10px;
   border-radius:25px;
   margin: 3px;
@@ -144,5 +138,5 @@ table {
 }
 .right{
   background-color:#a5e7ff;
-  margin-left:150px;
+  margin-left:25%;
 }

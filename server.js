@@ -208,7 +208,7 @@ app.get('/delete/:id/:userid', (req, res) => {
   if (req.session.user_id === req.params.userid) {
     connection.query('DELETE from tasks WHERE id = ? and taskby = ?', [req.params.id, req.params.userid], (err, reply) => {
       console.log(reply)
-      res.redirect('/')
+      res.redirect('/#/tasks')
     })
   } else {
     res.redirect('/')
@@ -226,6 +226,7 @@ app.get('/updatetask/:id/:userid/:status', (req, res) => {
     res.redirect('/')
   }
 })
+
 
 app.get('/logout', (req, res) => {
   req.session.destroy(err => {
