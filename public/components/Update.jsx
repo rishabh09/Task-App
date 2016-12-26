@@ -3,6 +3,8 @@ import { getJSON } from 'io-square-browser'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import Back from 'material-ui/svg-icons/content/reply'
 import { IndexLink, Link } from 'react-router'
+import TextField from 'material-ui/TextField'
+
 
 const Update = React.createClass({
   componentWillMount: function () {
@@ -29,24 +31,41 @@ const Update = React.createClass({
       <div className='row'>
         <form>
           <div className='updateForm'>
-            <label for='fname'>
+           <div id="fname_div" className="formRows">
+            <label>
               First Name
             </label>
-            <input type='text' name='fname' value={this.state.fname} />
-            <label for='lname'>
+            <TextField
+            style={{float:'right'}}
+             name='fname'
+             value={this.state.fname}
+             required
+            />
+            </div>
+            <br/>
+            <div id="lname_div" className="formRows">
+            <label>
               Last Name
             </label>
-            <input type='text' name='lname' value={this.state.lname} />
+            <TextField
+            style={{float:'right'}}
+             name='lname'
+             value={this.state.lname}
+             required
+            />
+            </div>
             <br/>
-            <label for='email'>
+            <div id="email_div" className="formRows">
+            <label>
               Email
             </label>
-            <input
-              type='email'
-              id='email'
-              name='email'
-              value={this.state.email} />
-            <br/>
+            <TextField
+            style={{float:'right'}}
+             name='email'
+             value={this.state.email}
+             required
+            />
+            </div>
             <button type='submit' className='success button'>
               Submit
             </button>

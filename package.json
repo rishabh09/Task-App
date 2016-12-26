@@ -1,6 +1,6 @@
 {
   "name": "Task-App",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -17,6 +17,8 @@
     "express": "^4.14.0",
     "express-session": "^1.14.2",
     "guid": "0.0.12",
+    "intl": "^1.2.5",
+    "intl-locales-supported": "^1.0.0",
     "io-square": "^0.1.5",
     "io-square-browser": "0.0.7",
     "material-ui": "^0.16.5",

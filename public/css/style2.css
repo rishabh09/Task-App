@@ -50,32 +50,36 @@ table {
 /*Custom style*/
 html,body{
   height: 100%;
-background-color: #012660;
+}
+#navbar{
+  position: fixed;
+  top:0px;
+  left:0px;
+  width:100%;
+  height: 10%;
+  background-color: rgb(0, 188, 212);
+
 }
 #updateform{
   background-color: white;
   height:95%;
-  width:80%;
+  width:70%;
   position: absolute;
-  top:0px;
-  left: 10%;
+  top:10%;
+  left: 15%;
+  margin-top: 5%;
 }
-#update{
-  position: absolute;
-  margin-left: 50px;
-  margin-top: 50px;
-}
+
 #update label{
+  font-size: 20px;
+  display: inline-block;
+  width: 30%;
   margin-top: 35px;
-  width: 130px;
-  float: left;
-  margin-right: 50px;
-  font-size: 16px;
 }
 #update input[type="text"],#update input[type="email"]{
-    margin-top: 30px;
-    width:400px;
-    height: 30px;
+    width:60%;
+    height: 8%;
+    margin-top: 35px;
     font-size: 23px;
     padding-left: 10px;
 }
@@ -86,88 +90,46 @@ background-color: #012660;
   width:70%;
   height: 50px;
   margin-left: 15%;
+  margin-top: 5%;
   font-size: 35px;
   border-radius: 8px;
 }
-#createform{
-  padding-left: 50px;
-  padding-top: 25px;
-  background-color: white;
-  width:80%;
-  margin-left: 10%;
-  height: 100%;
-}
-#user_list{
-  width:600px;
-}
-#user_list select ,#user_list textarea,#user_list input[type="text"]{
+
+
+
+@media screen and (min-device-width: 300px) and (max-device-width:767px){
+#navbar{
+  position: fixed;
+  top:0px;
+  left:0px;
   width:100%;
-  height: 50px;
-  padding-left: 5px;
-  font-size: 25px;
-}
-#user_list textarea{
-  height: 200px;
+  height: 10%;
+  background-color: rgb(0, 188, 212);
 
 }
-#user_list input[type="submit"]{
-  height: 50px;
-  width:100%;
-  font-size: 30px;
-  background-color: #05b0bc;
-  color: white;
-  border-radius: 10px;
-}
-#userdetails{
-  background-color: #f2f2f2;
-  position: absolute;
-  top:30px;
-  left:100px;
-  height: 500px;
-  width: 300px;
-}
-#dashboard{
+#update label{
+  font-size: 50px;
   display: inline-block;
-  background: white;
-  width: 94%;
-  margin-left: 3%;
-  height: 100%;
+  width: 50%;
+  margin-top: 35px;
 }
-#tables{
-  position: absolute;
-  top:30px;
-  left:410px;
+#update input[type="text"],#update input[type="email"]{
+    width:100%;
+    height: 40%;
+    margin-top: 35px;
+    font-size: 60px;
+    padding: 20px;
 }
-table {
-    margin: 10px;
-    border-collapse: collapse;
-    width: 100%;
+#update input[type="submit"]{
+  position: fixed;
+  left:0px;
+  background-color: #6095ea;
+  color: White;
+  width:75%;
+  height: 10%;
+  margin-top: 10%;
+  font-size: 60px;
+  border-radius: 8px;
 }
-th, td {
-    text-align: left;
-    padding: 8px;
 }
-tr:nth-child(even){background-color: #f2f2f2}
-th {
-    background-color: #4CAF50;
-    color: white;
 
-}
-#tables h2{
-  text-align: center;
-  font-size: 20px;
-  margin: 5px;
-}
-#userdetails a{
-  background-color: #4CAF50;
-  color: white;
-font: bold 11px Arial;
-  padding: 10px 10px 10px 10px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-  font-size: 25px;
-  float: left;
-    border-radius: 10px;
-}

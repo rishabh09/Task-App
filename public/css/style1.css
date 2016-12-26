@@ -46,6 +46,9 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
+
+
 /*Custom style*/
 @media screen and (min-device-width: 768px){
 body{
@@ -73,7 +76,6 @@ background-color: rgba(67, 73, 81, 0.5);
   height: 50px;
   border: solid 2px #3478e5;
 }
-
 
 
 

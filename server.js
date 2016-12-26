@@ -1,5 +1,4 @@
 const express = require('express')
-const Guid = require('guid')
 const uuid = require('uuid')
 const db = require('./io-square-redis')
 const bodyParser = require('body-parser')
@@ -12,7 +11,7 @@ const mysql = require('mysql')
 const serveStatic = require('serve-static')
 const path = require('path')
 const compression = require('compression')
-
+const moment = require('moment')
 const app = express()
 
 db.redis.setClient()
@@ -157,12 +156,13 @@ app.get('/userdata', (req, res) => {
     res.send(data[0])
   })
 })
+
 app.post('/formsubmit', (req, res) => {
   const taskObject = {
     id: uuid.v1(),
     title: req.body.task_name,
     details: req.body.task_details,
-    date: req.body.date,
+    date: moment().format('DD/MM/YYYY'),
     duedate: req.body.duedate,
     taskby: req.session.user_id,
     taskto: req.body.taskto_id,
@@ -174,9 +174,9 @@ app.post('/formsubmit', (req, res) => {
     res.redirect('/')
   })
 })
+
 app.get('/getdashboard', (req, res) => {
   connection.query('SELECT * FROM tasks WHERE taskby = ?', req.session.user_id, (err, data) => {
-
     connection.query('SELECT * FROM tasks WHERE taskto = ?', req.session.user_id, (err1, data1) => {
       connection.query('SELECT * FROM userinfo', (err2, data2) => {
         let userlist = {}
@@ -194,20 +194,6 @@ app.get('/getdashboard', (req, res) => {
   })
 })
 
-app.get('/usertasks', (req, res) => {
-  connection.query('SELECT * FROM tasks WHERE taskby = ?', req.session.user_id, (err, data) => {
-    connection.query('SELECT * FROM userinfo', (err2, data2) => {
-      let userlist = {}
-      data2.map(function (x) {
-        userlist[x.id] = x.fname + ' ' + x.lname
-      })
-      res.send({
-        taskby: data,
-        userlist: userlist
-      })
-    })
-  })
-})
 app.get('/delete/:id/:userid', (req, res) => {
   console.log(req.session.user_id, req.params.userid)
   if (req.session.user_id === req.params.userid) {

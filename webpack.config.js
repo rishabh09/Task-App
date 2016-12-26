@@ -22,8 +22,6 @@ module.exports = {
          Dashboard : 'public/components/Dashboard.jsx',
          Update: 'public/components/Update.jsx',
          Create: 'public/components/Create.jsx',
-         New: 'public/components/New.jsx',
-         Tasks: 'public/components/Tasks.jsx',
          AppCss: 'public/css/style.css',
          Socket: 'public/socket.io.js',
          Chat: 'public/components/Chat.jsx'
