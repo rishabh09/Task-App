@@ -9,7 +9,9 @@ import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowCol
 import Comment from 'material-ui/svg-icons/action/question-answer'
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
-import TextField from 'material-ui/TextField'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
+import { IndexLink, Link } from 'react-router'
 
 const customContentStyle = {
   position: 'fixed',
@@ -19,11 +21,14 @@ const customContentStyle = {
   maxWidth: 'none'
 }
 
+
 const Dashboard = React.createClass({
   componentWillMount: function () {
     getJSON('/getdashboard')
       .then((reply) => {
         this.setState({
+          taskby: reply.taskby,
+          user_id: reply.user_id,
           taskto: reply.taskto,
           userlist: reply.userlist,
           chats: [],
@@ -36,9 +41,8 @@ const Dashboard = React.createClass({
     this.setState({
       chattitle: e.title,
       open: true,
-      userid: this.state.userlist[e.taskto],
-      chatid: e.id,
-      uid: e.taskto
+      userid: this.state.userlist[this.state.user_id],
+      chatid: e.id
     })
     socket.emit('join', {chatroom: e.id,user: this.state.userlist[e.taskto]})
     socket.on('recieved-chats', function (data) {
@@ -72,7 +76,7 @@ const Dashboard = React.createClass({
           required='required'
           style={{ border: '0', padding: '2px', width: '86%', height: '28px', fontSize: '20px'}} />
         <FlatButton
-          type="submit"
+          type='submit'
           label='Submit'
           primary={true}
           style={{width: '10%'}} />
@@ -98,28 +102,31 @@ const Dashboard = React.createClass({
         <Table selectable={false}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
-              <TableHeaderColumn style={{textAlign: 'center',fontSize: '20px',fontWeight: 'bold'}}>
+              <TableHeaderColumn style={{textAlign: 'center',fontSize: '17px',fontWeight: 'bold'}}>
                 Task Name
               </TableHeaderColumn>
-              <TableHeaderColumn style={{textAlign: 'center', fontSize: '20px',fontWeight: 'bold'}}>
+              <TableHeaderColumn style={{textAlign: 'center', fontSize: '17px',fontWeight: 'bold'}}>
                 Task Details
               </TableHeaderColumn>
-              <TableHeaderColumn style={{textAlign: 'center',fontSize: '20px',fontWeight: 'bold'}}>
+              <TableHeaderColumn style={{textAlign: 'center',fontSize: '17px',fontWeight: 'bold'}}>
                 Assigned By
               </TableHeaderColumn>
-              <TableHeaderColumn style={{textAlign: 'center', fontSize: '20px',fontWeight: 'bold'}}>
+               <TableHeaderColumn style={{textAlign: 'center',fontSize: '17px',fontWeight: 'bold'}}>
+                Assigned To
+              </TableHeaderColumn>
+              <TableHeaderColumn style={{textAlign: 'center', fontSize: '17px',fontWeight: 'bold'}}>
                 Assigned On
               </TableHeaderColumn>
-              <TableHeaderColumn style={{textAlign: 'center', fontSize: '20px',fontWeight: 'bold'}}>
+              <TableHeaderColumn style={{textAlign: 'center', fontSize: '17px',fontWeight: 'bold'}}>
                 Due Date
               </TableHeaderColumn>
-              <TableHeaderColumn style={{textAlign: 'center', fontSize: '20px',fontWeight: 'bold'}}>
+              <TableHeaderColumn style={{textAlign: 'center', fontSize: '17px',fontWeight: 'bold'}}>
                 Status
               </TableHeaderColumn>
-              <TableHeaderColumn style={{textAlign: 'center',fontSize: '20px',fontWeight: 'bold'}}>
+              <TableHeaderColumn style={{textAlign: 'center',fontSize: '17px',fontWeight: 'bold'}}>
                 Comments
               </TableHeaderColumn>
-              <TableHeaderColumn style={{textAlign: 'center',fontSize: '20px',fontWeight: 'bold'}}>
+              <TableHeaderColumn style={{textAlign: 'center',fontSize: '17px',fontWeight: 'bold'}}>
                 Action
               </TableHeaderColumn>
             </TableRow>
@@ -128,14 +135,17 @@ const Dashboard = React.createClass({
             {this.state.taskto.map(function (val) {
                return (
                  <TableRow key={val.id}>
-                   <TableRowColumn style={{textAlign: 'center',fontSize: '15px'}}>
+                   <TableRowColumn title={val.title} style={{textAlign: 'center',fontSize: '15px'}}>
                      {val.title}
                    </TableRowColumn>
-                   <TableRowColumn style={{textAlign: 'center',fontSize: '15px'}}>
+                   <TableRowColumn title={val.details} style={{textAlign: 'center',fontSize: '15px'}}>
                      {val.details}
                    </TableRowColumn>
-                   <TableRowColumn style={{textAlign: 'center',fontSize: '15px'}}>
+                   <TableRowColumn title={that.state.userlist[val.taskby]} style={{textAlign: 'center',fontSize: '15px'}}>
                      {that.state.userlist[val.taskby]}
+                   </TableRowColumn>
+                    <TableRowColumn title={that.state.userlist[val.taskto]} style={{textAlign: 'center',fontSize: '15px'}}>
+                     {that.state.userlist[val.taskto]}
                    </TableRowColumn>
                    <TableRowColumn style={{textAlign: 'center',fontSize: '15px'}}>
                      {val.date}
@@ -143,14 +153,47 @@ const Dashboard = React.createClass({
                    <TableRowColumn style={{textAlign: 'center',fontSize: '15px'}}>
                      {val.duedate}
                    </TableRowColumn>
-                   <TableRowColumn className={val.status} style={{textAlign: 'center', fontSize: '15px'}}>
+                   <TableRowColumn className={val.status} title={val.status} style={{textAlign: 'center', fontSize: '15px'}}>
                      {val.status}
                    </TableRowColumn>
                    <TableRowColumn style={{textAlign: 'center'}}>
                      <FlatButton icon={<Comment/>} onClick={that.handleOpen.bind(this, val)} />
                    </TableRowColumn>
                    <TableRowColumn style={{textAlign: 'center'}}>
-                     <FlatButton primary={true} label='Change Status' href={'/updatetask/' + val.id + '/' + val.taskto + '/' + val.status} />
+                     <FlatButton primary={true} labelStyle={{padding:2}} label='Change Status' href={'/updatetask/' + val.id + '/' + val.taskto + '/' + val.status} />
+                   </TableRowColumn>
+                 </TableRow>
+               )
+             })}
+            {this.state.taskby.map(function (val) {
+               return (
+                 <TableRow key={val.id}>
+                   <TableRowColumn title={val.title} style={{textAlign: 'center',fontSize: '15px'}}>
+                     {val.title}
+                   </TableRowColumn>
+                   <TableRowColumn title={val.details} style={{textAlign: 'center',fontSize: '15px'}}>
+                     {val.details}
+                   </TableRowColumn>
+                    <TableRowColumn title={that.state.userlist[val.taskby]} style={{textAlign: 'center',fontSize: '15px'}}>
+                     {that.state.userlist[val.taskby]}
+                   </TableRowColumn>
+                   <TableRowColumn title={that.state.userlist[val.taskto]} style={{textAlign: 'center',fontSize: '15px'}}>
+                     {that.state.userlist[val.taskto]}
+                   </TableRowColumn>
+                   <TableRowColumn style={{textAlign: 'center',fontSize: '15px'}}>
+                     {val.date}
+                   </TableRowColumn>
+                   <TableRowColumn style={{textAlign: 'center',fontSize: '15px'}}>
+                     {val.duedate}
+                   </TableRowColumn>
+                   <TableRowColumn title={val.status} className={val.status} style={{textAlign: 'center', fontSize: '15px'}}>
+                     {val.status}
+                   </TableRowColumn>
+                   <TableRowColumn style={{textAlign: 'center'}}>
+                     <FlatButton icon={<Comment/>} onClick={that.handleOpen.bind(this, val)} />
+                   </TableRowColumn>
+                   <TableRowColumn style={{textAlign: 'center'}}>
+                     <FlatButton secondary={true} label='Delete' href={'/delete/' + val.id + '/' + val.taskby} />
                    </TableRowColumn>
                  </TableRow>
                )
@@ -165,8 +208,13 @@ const Dashboard = React.createClass({
           onRequestClose={this.handleClose}
           autoScrollBodyContent={true}
           contentStyle={customContentStyle}>
-          <Chat chats={this.state.chats} chatid={this.state.chatid} uid={this.state.uid} />
+          <Chat chats={this.state.chats} chatid={this.state.chatid} uid={this.state.user_id} />
         </Dialog>
+        <Link to='/create' activeClassName='active'>
+        <FloatingActionButton style={{ position: 'fixed',bottom: '5%',right: '5%'}}>
+          <ContentAdd />
+        </FloatingActionButton>
+        </Link>
       </div>
     )
   }

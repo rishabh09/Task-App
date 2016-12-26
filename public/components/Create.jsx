@@ -3,6 +3,10 @@ import { getJSON } from 'io-square-browser'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import 'style!css!react-datepicker/dist/react-datepicker.css'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import Back from 'material-ui/svg-icons/content/reply'
+import { IndexLink, Link } from 'react-router'
+
 const Create = React.createClass({
   handleChange: function (date) {
     this.setState({startDate: date})
@@ -88,11 +92,14 @@ const Create = React.createClass({
             <br/>
           </div>
         </form>
+          <IndexLink to='/' activeClassName='active'>
+        <FloatingActionButton style={{ position: 'fixed',bottom: '5%',right: '5%'}}>
+          <Back />
+        </FloatingActionButton>
+        </IndexLink>
       </div>
     )
   }
 })
 
-//
-// method="post" action="http://localhost:3000/formdata"
 module.exports = Create

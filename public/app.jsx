@@ -6,6 +6,7 @@ import Dashboard from 'Dashboard'
 import Update from 'Update'
 import Create from 'Create'
 import Tasks from 'Tasks'
+import New from 'New'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 require('style!css!AppCss')
@@ -16,6 +17,7 @@ render(
         <Route path='/tasks' component={Tasks} />
         <Route path='/update' component={Update} />
         <Route path='/create' component={Create} />
+        <Route path='/new' component={New} />
         <IndexRoute component={Dashboard} />
       </Route>
     </Router>

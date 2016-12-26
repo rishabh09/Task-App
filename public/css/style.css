@@ -53,6 +53,9 @@ table {
   position: absolute;
   left: 0px;
   top: 80px;
+  padding-left:1%;
+  padding-right:2%;
+  padding-bottom: 15%;
 }
 
 .updateForm input[type="text"]{

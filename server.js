@@ -112,7 +112,7 @@ app.post('/home', function (request, response) {
         url: me_endpoint_url,
         json: true
       }, function (err, resp, respBody) {
-        view.phone_num = request.body.mobile
+        view.phone_num = respBody.phone.national_number
         connection.query('SELECT * from userinfo WHERE id = ?', view.user_id, (err, data) => {
           if (err) throw err
           if (data.length < 1) response.render('home', view)
@@ -175,15 +175,20 @@ app.post('/formsubmit', (req, res) => {
   })
 })
 app.get('/getdashboard', (req, res) => {
-  connection.query('SELECT * FROM tasks WHERE taskto = ?', req.session.user_id, (err1, data1) => {
-    connection.query('SELECT * FROM userinfo', (err2, data2) => {
-      let userlist = {}
-      data2.map(function (x) {
-        userlist[x.id] = x.fname + ' ' + x.lname
-      })
-      res.send({
-        taskto: data1,
-        userlist: userlist
+  connection.query('SELECT * FROM tasks WHERE taskby = ?', req.session.user_id, (err, data) => {
+
+    connection.query('SELECT * FROM tasks WHERE taskto = ?', req.session.user_id, (err1, data1) => {
+      connection.query('SELECT * FROM userinfo', (err2, data2) => {
+        let userlist = {}
+        data2.map(function (x) {
+          userlist[x.id] = x.fname + ' ' + x.lname
+        })
+        res.send({
+          taskby: data,
+          taskto: data1,
+          userlist: userlist,
+          user_id: req.session.user_id
+        })
       })
     })
   })
@@ -208,7 +213,7 @@ app.get('/delete/:id/:userid', (req, res) => {
   if (req.session.user_id === req.params.userid) {
     connection.query('DELETE from tasks WHERE id = ? and taskby = ?', [req.params.id, req.params.userid], (err, reply) => {
       console.log(reply)
-      res.redirect('/#/tasks')
+      res.redirect('/')
     })
   } else {
     res.redirect('/')
@@ -226,7 +231,6 @@ app.get('/updatetask/:id/:userid/:status', (req, res) => {
     res.redirect('/')
   }
 })
-
 
 app.get('/logout', (req, res) => {
   req.session.destroy(err => {

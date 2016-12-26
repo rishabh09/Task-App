@@ -8,10 +8,6 @@ html
     link(href="css/style1.css" rel="stylesheet" type="text/css")
   body
     div#loginform
-      h4 Please Enter Your Mobile Number
-      input(type="hidden" id="country_code" value="+91")
-      input(type="number" id="phone_num")
-      br
       button(id="login_button" onclick="phone_btn_onclick();") Login via SMS
     form#my_form(method="post" action="/home")
       input#mobile(type="hidden" name="mobile")

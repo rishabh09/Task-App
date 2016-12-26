@@ -1,5 +1,9 @@
 import React from 'react'
 import { getJSON } from 'io-square-browser'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import Back from 'material-ui/svg-icons/content/reply'
+import { IndexLink, Link } from 'react-router'
+
 const Update = React.createClass({
   componentWillMount: function () {
     getJSON('/userdata').then((reply) => {
@@ -48,6 +52,11 @@ const Update = React.createClass({
             </button>
           </div>
         </form>
+            <IndexLink to='/' activeClassName='active'>
+        <FloatingActionButton style={{ position: 'fixed',bottom: '5%',right: '5%'}}>
+          <Back />
+        </FloatingActionButton>
+        </IndexLink>
       </div>
     )
   }
