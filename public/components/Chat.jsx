@@ -16,9 +16,9 @@ const Chat = React.createClass({
       })
     })
   },
-  componentWillUpdate:function(){
+  componentDidUpdate:function(){
       console.log(this.refs.chatlist.scrollTop,this.refs.chatlist.scrollHeight)
-      this.refs.chatlist.scrollTop = this.refs.chatlist.scrollHeight
+      this.refs.blankchat.scrollIntoView() 
       console.log(this.refs.chatlist.scrollTop,this.refs.chatlist.scrollHeight)
 
   },
@@ -100,6 +100,7 @@ const Chat = React.createClass({
                    </div>)
                  }
                })}
+		<div ref="blankchat"></div>
             </div>)
   }
 })
