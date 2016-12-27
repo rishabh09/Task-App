@@ -29,7 +29,7 @@ const Update = React.createClass({
     }
     return (
       <div className='row'>
-        <form name="Update-Form" method="post" action="updateprofile" >
+        <form name="Update-Form" method="post" action="/updateuser" >
           <div className='updateForm'>
            <div id="fname_div" className="formRows">
             <label>

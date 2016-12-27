@@ -12,6 +12,7 @@ const serveStatic = require('serve-static')
 const path = require('path')
 const compression = require('compression')
 const moment = require('moment')
+const accountKit = require('./accountkit')
 const app = express()
 
 db.redis.setClient()
@@ -216,6 +217,12 @@ app.get('/updatetask/:id/:userid/:status', (req, res) => {
     })
     res.redirect('/')
   }
+})
+
+app.get('/updateuser',(req,res)=>{
+  connection.query('UPDATE userinfo SET fname = ?, lname = ?, email = ? WHERE id = ? ',[req.body.fname, req.body.lname, req.body.email,req.session.user_id],(err, reply) => {
+        res.redirect('/')
+  })
 })
 
 app.get('/logout', (req, res) => {
