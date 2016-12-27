@@ -219,7 +219,7 @@ app.get('/updatetask/:id/:userid/:status', (req, res) => {
   }
 })
 
-app.get('/updateuser',(req,res)=>{
+app.post('/updateuser',(req,res)=>{
   connection.query('UPDATE userinfo SET fname = ?, lname = ?, email = ? WHERE id = ? ',[req.body.fname, req.body.lname, req.body.email,req.session.user_id],(err, reply) => {
         res.redirect('/')
   })
