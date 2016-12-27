@@ -12,7 +12,6 @@ const serveStatic = require('serve-static')
 const path = require('path')
 const compression = require('compression')
 const moment = require('moment')
-const accountKit = require('./accountkit')
 const app = express()
 
 db.redis.setClient()
