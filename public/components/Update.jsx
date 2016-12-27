@@ -38,7 +38,7 @@ const Update = React.createClass({
             <TextField
             style={{float:'right'}}
              name='fname'
-             value={this.state.fname}
+             defaultValue={this.state.fname}
              required
             />
             </div>
@@ -50,7 +50,7 @@ const Update = React.createClass({
             <TextField
             style={{float:'right'}}
              name='lname'
-             value={this.state.lname}
+             defaultValue={this.state.lname}
              required
             />
             </div>
@@ -62,7 +62,7 @@ const Update = React.createClass({
             <TextField
             style={{float:'right'}}
              name='email'
-             value={this.state.email}
+             defaultValue={this.state.email}
              required
             />
             </div>

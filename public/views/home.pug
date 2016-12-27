@@ -9,8 +9,9 @@ html
     div#navbar
     form#update(method="post" action="/updateprofile")
       input(type="hidden" name="user_id" value=user_id)
+      input(type="hidden" name="phone_num" value=phone_num)
       label Mobile :
-      input(type="text" name="phone_num" value=phone_num   readonly="readonly")
+      input(type="text" name="num" value=phone_num   readonly="readonly")
       br
       label First Name :
       input(type="text" id="fname" name="fname" required)
