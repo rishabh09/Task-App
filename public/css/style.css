@@ -49,6 +49,20 @@ table {
 
 /*Custom CSS*/
 
+body{
+  overflow-y: scroll;
+}
+strong{
+  font-size: 1.1em;
+}
+em{
+  font-style: italic;
+  font-size: 0.8em;
+  color: #757575;
+  width: 100px;
+  display: inline-block;
+}
+
 .row{
   position: absolute;
   left: 0px;
@@ -118,12 +132,6 @@ table {
   font-size: 20px;
 }
 
-.Completed{
-  color: green;
-}
-.Not{
-  color: red;
-}
 :invalid {
   box-shadow: none;
 }
@@ -170,3 +178,103 @@ table {
   display: inline-block;
 }
 
+.taskRows{
+  background-color: white;
+  padding: 1%;
+  width:72%;
+  margin: 13%;
+  margin-top:0.5%;
+  margin-bottom: 0.5%;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
+  display: inline-block;
+}
+
+.taskName{
+  font-size: 1.5em;
+  float: left;
+  width:74%;
+  padding: 1%;
+  display: block;
+  word-wrap: break-word;
+}
+
+.dueDate{
+  float: right;
+    width: 18%;
+  font-size:1.5em;
+    padding: 1%;
+}
+.taskTo{
+float: left;
+  width: 15%;
+    padding-left: 1%;
+      font-size: 0.8em;
+  }
+.taskStatus{
+    float:right;
+        width: 18%;
+  font-size:0.8em;
+}
+.Completed{
+  color: green;
+}
+.Not{
+  color: red;
+}
+
+.taskPannel{
+  margin-top: 2%;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
+}
+
+.taskDetails{
+  line-height: 1.2;
+margin: 1%;
+padding: 1%;
+width:100%;
+float: left;
+ display: block;
+ height:160px;
+overflow-y:auto;
+  word-wrap: break-word;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
+
+}
+.taskPersons{
+margin: 1%;
+padding: 1%;
+padding-top:1%;
+width:30%;
+float:right;
+box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
+}
+.taskAction{
+  float:left;
+  display: inline;
+  width:100%;
+}
+
+
+.chatPanel{
+  height:250px;
+  clear:both;
+}
+.chatList{
+  float: left;
+  width:98%;
+  margin-left: 0.5%;
+  padding-left:0.5%;
+  margin-right: 0.5%;
+  padding-right:0.5%;
+  height: 190px;
+  display: block;
+  border: 1px solid rgba(0,0,0,.15);
+  overflow-y:auto;
+}
+.chatForm{
+  float: left;
+
+  padding: 1%;
+  width:100%;
+  box-sizing: border-box;
+}

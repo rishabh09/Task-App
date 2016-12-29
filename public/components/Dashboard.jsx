@@ -8,21 +8,11 @@ import moment from 'moment'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import { IndexLink, Link } from 'react-router'
+import RaisedButton from 'material-ui/RaisedButton';
+import UpArrow from 'material-ui/svg-icons/navigation/expand-less';
+import Panel from 'TaskPanel' 
+import {VelocityTransitionGroup} from 'velocity-react'
 
-const Panel = React.createClass({
-  componentWillMount: function () {
-    this.setState({
-      data: this.props.data
-    })
-  },
-  render: function () {
-    return (
-      <div className="taskPannel">
-        {this.state.data}
-      </div>
-    )
-  }
-})
 
 const Dashboard = React.createClass({
   componentWillMount: function () {
@@ -32,7 +22,7 @@ const Dashboard = React.createClass({
       .then((reply) => {
         this.setState({
           taskby: reply.taskby,
-          user_id : reply.user_id,
+          userid : reply.user_id,
           taskto : reply.taskto,
           userlist : reply.userlist
         })
@@ -50,6 +40,7 @@ const Dashboard = React.createClass({
   handleClick: function (e) {
     let stateObj = this.state
     stateObj['panel'][e.id] = !stateObj['panel'][e.id]
+    this.refs[e.id].scrollIntoView()
     this.setState(stateObj)
     console.log(this.state)
   },
@@ -77,21 +68,39 @@ const Dashboard = React.createClass({
     return (
       <div className='row'>
         {this.state.taskto.map(function (val) {
-           return (<div key={val.id} className="taskRows" >
-                     <div class="taskNameRow" onClick={that.handleClick.bind(this, val)}>{val.title}</div>
-                     <div class="person">Assigned By {that.state.userlist[val.taskby]}</div>
-                     {that.state.panel[val.id] ? (<div><Panel data={val.id}/>        
-                      <button onClick={that.handleClose.bind(this,val)} className="closeButton">Close</button>
-                      </div>): null}
+           return (<div key={val.id} className="taskRows" ref={val.id} className="taskRows" >
+                    <div onClick={that.handleClick.bind(this, val)}>
+                     <div className="taskName" >{val.title}</div>
+                     <div className="dueDate">{val.duedate}</div>
+                       <div style={{clear:'both'}}></div>
+                      <div className="taskTo">{that.state.userlist[val.taskto]}</div>
+                     <div className={"taskStatus "+val.status}>{val.status}</div>
+                     </div>
+                     <div style={{clear: 'both'}}>  </div>
+                             <VelocityTransitionGroup enter={{animation: "slideDown"}} leave={{animation: "slideUp"}}>
+
+                     {that.state.panel[val.id] ? (<Panel details={val.details} taskby={val.taskby} taskto={val.taskto} date={val.date} duedate={val.duedate} status={val.status} id={val.id} userlist={that.state.userlist} userid={that.state.user_id}/>        
+                    ): null}
+                              </VelocityTransitionGroup>
+
                    </div>)
          })}
          {this.state.taskby.map(function (val) {
-           return (<div key={val.id} className="taskRows">
-                     <div class="taskNameRow" onClick={that.handleClick.bind(this, val)}>{val.title}</div>
-                     <div class="person">Assigned To {that.state.userlist[val.taskto]}</div> 
-                     {that.state.panel[val.id] ? (<div><Panel data={val.id}/>        
-                      <button onClick={that.handleClose.bind(this,val)} className="closeButton">Close</button>
-                      </div>): null}
+           return (<div key={val.id} className="taskRows" ref={val.id}>
+                      <div onClick={that.handleClick.bind(this, val)}>
+                     <div className="taskName" >{val.title}</div>
+                     <div className="dueDate">{val.duedate}</div> 
+                     <div style={{clear:'both'}}></div>
+                      <div className="taskTo">{that.state.userlist[val.taskto]}</div>
+                     <div className={"taskStatus "+val.status}>{val.status}</div>
+                     </div>
+                     <div style={{clear: 'both'}}></div>
+                       <VelocityTransitionGroup enter={{animation: "slideDown"}} leave={{animation: "slideUp"}}>
+
+                     {that.state.panel[val.id] ? (<Panel details={val.details} taskby={val.taskby} taskto={val.taskto} date={val.date} duedate={val.duedate} status={val.status} id={val.id} userlist={that.state.userlist} userid={that.state.userid}/>        
+                      ): null}
+                              </VelocityTransitionGroup>
+
                    </div>)
          })}
       </div>
@@ -100,3 +109,4 @@ const Dashboard = React.createClass({
 })
 
 module.exports = Dashboard
+ 

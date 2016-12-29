@@ -6,6 +6,9 @@ import Dashboard from 'Dashboard'
 import Update from 'Update'
 import Create from 'Create'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+require('velocity-animate');
+require('velocity-animate/velocity.ui');
+
 
 require('style!css!AppCss')
 render(
