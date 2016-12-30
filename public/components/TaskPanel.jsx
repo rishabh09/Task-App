@@ -9,6 +9,10 @@ const Panel = React.createClass({
       panel: false
     })
   },
+  componentDidMount: function(){
+        this.refs[this.props.id].scrollIntoView()
+
+  },
 
   handleClick: function (e) {
     this.setState({
@@ -26,7 +30,7 @@ const Panel = React.createClass({
       marginBottom: '1%'
     }
     return (
-      <div className='taskPannel'>
+      <div className='taskPannel' ref={this.props.id}>
         <div style={{width:'63%',float: 'left',paddingTop:'0.5%'}}>
           <div className='taskDetails'>
             {this.props.details}
@@ -62,7 +66,7 @@ const Panel = React.createClass({
         </div>
         <div style={{clear: 'both'}}></div>
         <VelocityTransitionGroup enter={{animation: 'slideDown'}} leave={{animation: 'slideUp'}}>
-          {this.state.panel ? <Chat chatid={this.props.id} userid={this.state.userid} userlist={this.props.userlist}/> : null}
+          {this.state.panel ? <Chat chatid={this.props.id} userid={this.props.userid} userlist={this.props.userlist}/> : null}
         </VelocityTransitionGroup>
       </div>
     )

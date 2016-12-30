@@ -68,7 +68,7 @@ const Dashboard = React.createClass({
     return (
       <div className='row'>
         {this.state.taskto.map(function (val) {
-           return (<div key={val.id} className="taskRows" ref={val.id} className="taskRows" >
+           return (<div key={val.id} ref={val.id} className="taskRows" className="taskRows" >
                     <div onClick={that.handleClick.bind(this, val)}>
                      <div className="taskName" >{val.title}</div>
                      <div className="dueDate">{val.duedate}</div>

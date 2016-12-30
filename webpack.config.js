@@ -25,7 +25,8 @@ module.exports = {
          AppCss: 'public/css/style.css',
          Socket: 'public/socket.io.js',
          Chat: 'public/components/Chat.jsx',
-         TaskPanel: 'public/components/TaskPanel.jsx'
+         TaskPanel: 'public/components/TaskPanel.jsx',
+         ChatList: 'public/components/ChatList.jsx'
         },
         extensions: ['', '.js', '.jsx']
     },
