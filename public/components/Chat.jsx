@@ -50,7 +50,7 @@ let that = this
               </div>)
       }
         return (<div className='chatPanel'>
-              <ChatList chatid={this.props.id} userid={this.props.userid}oldchats={this.state.oldchats} chats={this.state.chats}/>    
+              <ChatList chatid={this.props.chatid} userid={this.props.userid} oldchats={this.state.oldchats} chats={this.state.chats}/>    
               <div className="chatForm">
               <form id='chatform'  onSubmit={this.sendMessage}>
                <TextField ref='chatmessage' style={{width:'80%'}} />

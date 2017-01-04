@@ -7,20 +7,20 @@ getInitialState: function(){
     return ({
         oldchats:this.props.oldchats,
         chats:this.props.chats,
-        blank: this.props.chatid+"blank",
         userid:this.props.userid
     })
 },
-componentDidUpdate:function(){
-           this.refs[this.state.blank].scrollIntoView() 
+componentDidMount:function(){
+  this.refs.chatblank.scrollIntoView() 
 },
-  componentDidMount:function(){
-           this.refs[this.state.blank].scrollIntoView() 
+componentDidUpdate:function(){
+  this.refs.chatblank.scrollIntoView() 
+            
 },
 render: function(){
     let that = this
     console.log(this.props.chats)
-    return ( <div className='chatList' >
+    return ( <div ref="chatlist" className='chatList' >
             {this.state.oldchats.map(function (chat) {
                  let chatx = JSON.parse(chat)
                  if(that.state.userid === chatx.userid){
@@ -89,7 +89,7 @@ render: function(){
                    </div>)
                  }
                })}
-            <div ref={this.state.blank}></div>
+            <div id="chatblank" ref="chatblank"></div>
               </div>)
 }
 

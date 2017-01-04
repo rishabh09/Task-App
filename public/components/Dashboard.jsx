@@ -24,7 +24,8 @@ const Dashboard = React.createClass({
           taskby: reply.taskby,
           userid : reply.user_id,
           taskto : reply.taskto,
-          userlist : reply.userlist
+          userlist : reply.userlist,
+          open:null
         })
         reply.taskto.map(function (val) {
           stateObj['panel'][val.id] = false
@@ -38,20 +39,21 @@ const Dashboard = React.createClass({
 
   },
   handleClick: function (e) {
-    let stateObj = this.state
-    stateObj['panel'][e.id] = !stateObj['panel'][e.id]
-    this.refs[e.id].scrollIntoView()
-    this.setState(stateObj)
-    console.log(this.state)
+    console.log(e.id)
+    if(this.state.open===e.id){
+       this.setState({
+      open:null
+    })
+    }else{
+          this.setState({
+      open:e.id
+    })
+    }
+ 
   },
-  handleClose:function(e){
-   let stateObj = this.state
-    stateObj['panel'][e.id] = false
-    this.setState(stateObj)
-    console.log(this.state)
-  }
-  ,
+
   render: function () {
+ 
     const that = this
     if (!this.state || !this.state.panel) {
       return (    <div className='row'>
@@ -64,7 +66,7 @@ const Dashboard = React.createClass({
                   </div>
       )
     }
-
+       console.log(this.state)
     return (
       <div className='row'>
         {this.state.taskto.map(function (val) {
@@ -79,7 +81,7 @@ const Dashboard = React.createClass({
                      <div style={{clear: 'both'}}>  </div>
                              <VelocityTransitionGroup enter={{animation: "slideDown"}} leave={{animation: "slideUp"}}>
 
-                     {that.state.panel[val.id] ? (<Panel details={val.details} taskby={val.taskby} taskto={val.taskto} date={val.date} duedate={val.duedate} status={val.status} id={val.id} userlist={that.state.userlist} userid={that.state.user_id}/>        
+                     {(that.state.open===val.id) ? (<Panel details={val.details} taskby={val.taskby} taskto={val.taskto} date={val.date} duedate={val.duedate} status={val.status} id={val.id} userlist={that.state.userlist} userid={that.state.userid}/>        
                     ): null}
                               </VelocityTransitionGroup>
 
@@ -97,7 +99,7 @@ const Dashboard = React.createClass({
                      <div style={{clear: 'both'}}></div>
                        <VelocityTransitionGroup enter={{animation: "slideDown"}} leave={{animation: "slideUp"}}>
 
-                     {that.state.panel[val.id] ? (<Panel details={val.details} taskby={val.taskby} taskto={val.taskto} date={val.date} duedate={val.duedate} status={val.status} id={val.id} userlist={that.state.userlist} userid={that.state.userid}/>        
+                     {(that.state.open===val.id) ? (<Panel details={val.details} taskby={val.taskby} taskto={val.taskto} date={val.date} duedate={val.duedate} status={val.status} id={val.id} userlist={that.state.userlist} userid={that.state.userid}/>        
                       ): null}
                               </VelocityTransitionGroup>
 

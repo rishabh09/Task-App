@@ -9,21 +9,13 @@ const Panel = React.createClass({
       panel: false
     })
   },
-  componentDidMount: function(){
-        this.refs[this.props.id].scrollIntoView()
-
-  },
 
   handleClick: function (e) {
     this.setState({
       panel: !this.state.panel
     })
   },
-  handleClose: function (e) {
-    this.setState({
-      panel: false
-    })
-  },
+
   render: function () {
     const buttonStyle = {
       marginLeft: '3%',
