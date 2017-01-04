@@ -260,3 +260,30 @@ io.on('connection', function (socket) {
     console.log('user disconnected')
   })
 })
+
+// Mobile App Requests
+
+app.get('/appuserdata/:userid',(req,res)=>{
+   connection.query('SELECT * FROM userinfo WHERE id = ?', req.params.userid, (err, data) => {
+    res.send(data[0])
+  })
+})
+
+app.get('/appdashboard/:userid',(req,res)=>{
+  connection.query('SELECT * FROM tasks WHERE taskby = ?', req.params.userid, (err, data) => {
+    connection.query('SELECT * FROM tasks WHERE taskto = ?', req.params.userid, (err1, data1) => {
+      connection.query('SELECT * FROM userinfo', (err2, data2) => {
+        let userlist = {}
+        data2.map(function (x) {
+          userlist[x.id] = x.fname + ' ' + x.lname
+        })
+        res.send({
+          taskby: data,
+          taskto: data1,
+          userlist: userlist,
+          user_id: req.session.user_id
+        })
+      })
+    })
+  })
+})
