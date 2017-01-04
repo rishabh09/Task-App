@@ -1,6 +1,0 @@
-node_modules/
-.env
-/public/bundle.js
-design.js
-.gitignore
-accountkit.js
