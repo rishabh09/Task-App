@@ -105,6 +105,11 @@ const Dashboard = React.createClass({
 
                    </div>)
          })}
+            <Link to='/create' activeClassName='active'>
+        <FloatingActionButton style={{ position: 'fixed',bottom: '5%',right: '5%'}}>
+          <ContentAdd />
+        </FloatingActionButton>
+        </Link>
       </div>
     )
   }
