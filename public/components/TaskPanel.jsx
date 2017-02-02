@@ -30,7 +30,7 @@ const Panel = React.createClass({
           </div>
           <div className='taskAction'>
             <RaisedButton label='Update Task' style={buttonStyle} primary={true} />
-            {(this.props.taskby === this.props.userid) ? (<RaisedButton
+            {(this.props.taskby == this.props.userid) ? (<RaisedButton
                                                              style={buttonStyle}
                                                              backgroundColor='#FF5252'
                                                              labelColor='#ffffff'
