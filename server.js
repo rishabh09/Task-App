@@ -294,7 +294,8 @@ app.post('/appformdata',(req, res) => {
 })
 
 app.post('/aapupdateuser',(req,res)=>{
-  connection.query('UPDATE userinfo SET fname = ?, lname = ?, email = ? WHERE id = ? ',[req.body.fname, req.body.lname, req.body.email,req.body.id],(err, reply) => {
+  const data = JSON.parse(req.body)
+  connection.query('UPDATE userinfo SET fname = ?, lname = ?, email = ? WHERE id = ? ',[data.fname, data.lname, data.email,data.id],(err, reply) => {
         res.send("success")
   })
 })
