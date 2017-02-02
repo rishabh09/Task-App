@@ -21,6 +21,7 @@ const Panel = React.createClass({
       marginLeft: '3%',
       marginBottom: '1%'
     }
+    console.log(this.props.taskby,this.props.userid)
     return (
       <div className='taskPannel' ref={this.props.id}>
         <div style={{width:'63%',float: 'left',paddingTop:'0.5%'}}>
