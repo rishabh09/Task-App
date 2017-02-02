@@ -26,7 +26,7 @@ const Create = React.createClass({
  handleChange :function(event, index, value){
     this.setState({
       select: value})
-      console.log(value)
+
  },
   
   componentWillMount: function () {
