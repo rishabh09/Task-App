@@ -287,3 +287,14 @@ app.get('/appdashboard/:userid',(req,res)=>{
     })
   })
 })
+
+app.post('/appformdata',(req, res) => {
+  res.send("success")
+  console.log(req.body)
+})
+
+app.post('/aapupdateuser',(req,res)=>{
+  connection.query('UPDATE userinfo SET fname = ?, lname = ?, email = ? WHERE id = ? ',[req.body.fname, req.body.lname, req.body.email,req.body.id],(err, reply) => {
+        res.send("success")
+  })
+})
