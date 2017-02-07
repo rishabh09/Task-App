@@ -288,10 +288,6 @@ app.get('/appdashboard/:userid',(req,res)=>{
   })
 })
 
-app.post('/appformdata',(req, res) => {
-  res.send("success")
-  console.log(req.body)
-})
 
 app.post('/appupdateuser',(req,res)=>{
 
@@ -302,4 +298,22 @@ app.post('/appupdateuser',(req,res)=>{
 
 
 
+})
+
+app.post('/appcreatetask', (req, res) => {
+  const taskObject = {
+    id: uuid.v1(),
+    title: req.body.taskname,
+    details: req.body.taskdetails,
+    date: moment().format('DD/MM/YYYY'),
+    duedate: req.body.date,
+    taskby: req.body.id,
+    taskto: req.body.taskto,
+    status: 'Not Completed',
+    deleted: 'false'
+  }
+  connection.query('INSERT into tasks SET ?', taskObject, (err, reply) => {
+    if (err) throw err
+    res.send("success")
+  })
 })
