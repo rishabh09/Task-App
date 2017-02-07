@@ -288,7 +288,7 @@ app.get('/appdashboard/:userid',(req,res)=>{
   })
 })
 
-app.post('/appformdata',(req, res) => {
+app.post('/appcreatetask',(req, res) => {
   res.send("success")
   console.log(req.body)
 })
