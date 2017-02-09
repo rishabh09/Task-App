@@ -296,10 +296,6 @@ app.post('/appupdateuser',(req,res)=>{
         res.send("success")
   })
 })
-app.post('/appupdatetask',(req,res)=>{
-  console.log(req.body)
-  res.send("success")
-})
 
 app.post('/appcreatetask', (req, res) => {
   const taskObject = {
@@ -317,4 +313,14 @@ app.post('/appcreatetask', (req, res) => {
     if (err) throw err
     res.send("success")
   })
+})
+
+app.post('/appupdatetask',(req,res)=>{
+   let x = 'Not Completed'
+    if (req.body.status === 'Not Completed') x = 'Completed'
+    connection.query('UPDATE tasks SET status = ? WHERE id = ? and taskto = ?', [x, req.body.taskid, req.body.userid], (err, reply) => {
+    res.send("success")
+    })
+
+
 })
