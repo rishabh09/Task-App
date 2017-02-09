@@ -323,8 +323,8 @@ app.post('/appupdatetask',(req,res)=>{
     })
 })
 
-app.post('/appdeletetask',(req,res)=>{
- connection.query('DELETE from tasks WHERE id = ? and taskby = ?', [req.body.id, req.body.taskby], (err, reply) => {
-      res.send("success")
+app.post('/appdeletetask',(req,res)=>{ 
+connection.query('DELETE from tasks WHERE id = ? and taskby = ?', [req.body.taskid, req.body.taskby], (err, reply) => {
+ res.send("success")
 })
 })
