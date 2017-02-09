@@ -299,7 +299,8 @@ app.post('/appupdateuser',(req,res)=>{
  connection.query('UPDATE userinfo SET fname = ?, lname = ?, email = ? WHERE id = ? ',[req.body.fname, req.body.lname, req.body.email,req.body.id],(err, reply) => {
         res.send("success")
   })
-
-
-
+})
+app.post('/appupdatetask',(req,res)=>{
+  console.log(req.body)
+  res.send("success")
 })
