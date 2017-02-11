@@ -270,6 +270,12 @@ app.get('/appuserdata/:userid',(req,res)=>{
 })
 
 app.get('/appdashboard/:userid',(req,res)=>{
+  let ftu = true
+    connection.query('SELECT * from userinfo WHERE id = ?', req.params.userid, (err, data) => {
+      if (err) throw err
+        if (data.length < 1) ftu = true
+        else ftu = false
+        })
   connection.query('SELECT * FROM tasks WHERE taskby = ?', req.params.userid, (err, data) => {
     connection.query('SELECT * FROM tasks WHERE taskto = ?', req.params.userid, (err1, data1) => {
       connection.query('SELECT * FROM userinfo', (err2, data2) => {
@@ -281,7 +287,8 @@ app.get('/appdashboard/:userid',(req,res)=>{
           taskby: data,
           taskto: data1,
           userlist: userlist,
-          user_id: req.session.user_id
+          user_id: req.session.user_id,
+          ftu: ftu
         })
       })
     })
