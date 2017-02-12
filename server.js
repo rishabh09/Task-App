@@ -335,3 +335,17 @@ connection.query('DELETE from tasks WHERE id = ? and taskby = ?', [req.body.task
  res.send("success")
 })
 })
+
+app.post('/appcreateprofile', (req, res) => {
+  let profileobj = {
+    id: req.body.id,
+    fname: req.body.fname,
+    lname: req.body.lname,
+    email: req.body.email,
+    mobile: req.body.phone
+  }
+  connection.query('INSERT into userinfo SET ?', profileobj, function (err, reply) {
+    if (err) throw err
+    res.send('success')
+  })
+})
